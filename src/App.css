@@ -13,3 +13,32 @@ p {
   text-align: center;
   margin: 2px 5px;
 }
+
+footer {
+  /* bottom: 10px; */
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+footer > p {
+  float: right;
+}
+
+main {
+}
+
+main > P {
+  position: sticky;
+  top: 0;
+}
+
+.elements {
+  top: 80px;
+  overflow: scroll;
+  /* border: 3px solid; */
+  height: calc(85vh);
+}

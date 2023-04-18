@@ -12,6 +12,7 @@ function App(props) {
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
   const [total, setTotal] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     // console.log(props.parent_total);
@@ -38,8 +39,14 @@ function App(props) {
     props.updateGlobalTotal(quantity * event.target.value, props.index);
   }
 
+  function handleDeleteChild() {
+    props.deleteChild(props.index);
+    props.updateGlobalTotal(0, props.index);
+    setIsVisible(false);
+  }
+
   return (
-    <form>
+    <form style={{ display: isVisible ? "" : "none" }}>
       <select onChange={mainElementChanged}>
         <option value="" selected disabled>
           Select Element
@@ -77,6 +84,7 @@ function App(props) {
             value={quantity}
           ></input>{" "}
           <span>{total}</span>
+          <i className="fa-solid fa-trash" onClick={handleDeleteChild}></i>
         </>
       )}
     </form>

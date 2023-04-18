@@ -1,5 +1,5 @@
 import Element from "./components/elements/app";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -7,8 +7,20 @@ function App() {
   const [child_sum, setChild_sum] = useState([]);
   const [sum, setSum] = useState(0);
 
+  useEffect(() => {
+    // console.log(components, child_sum);
+  });
+
   function handleAddElement() {
-    setComponenets([...components, components.length]);
+    setComponenets([
+      ...components,
+      <Element
+        key={components.length}
+        updateGlobalTotal={totalSum}
+        index={components.length}
+        deleteChild={deleteChild}
+      />,
+    ]);
   }
 
   function totalSum(value_from_child, childIndex) {
@@ -19,20 +31,38 @@ function App() {
       }, 0)
     );
   }
+
+  function deleteChild(index) {
+    console.log("index", index);
+    console.log(child_sum, child_sum.splice(index, 1));
+    // setComponenets(components.splice(index, 1));
+    // setChild_sum(child_sum.splice(index, 1));
+  }
   return (
     <>
-      <p>Type</p>
-      <p>Subtype</p>
-      <p>Price</p>
-      <p>Quantity</p>
-      <p>Total</p>
-      {components.map((e, i) => (
-        <Element key={i} updateGlobalTotal={totalSum} index={i} />
-      ))}
-      <br />
-      <button onClick={handleAddElement}>Add Element</button>
-      <br />
-      Total :{sum}
+      <main>
+        <p>Type</p>
+        <p>Subtype</p>
+        <p>Price</p>
+        <p>Quantity</p>
+        <p>Total</p>
+        <div className="elements">
+          {/* {components.map((e, i) => (
+            <Element
+              key={i}
+              updateGlobalTotal={totalSum}
+              index={i}
+              deleteChild={deleteChild}
+            />
+          ))} */}
+          {components}
+        </div>
+      </main>
+      <footer>
+        <hr />
+        <button onClick={handleAddElement}>Add Element</button>
+        <p>Total :{sum}</p>
+      </footer>
     </>
   );
 }
