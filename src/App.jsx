@@ -1,42 +1,38 @@
 import Element from "./components/elements/app";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import "./App.css";
 
 function App() {
   const [components, setComponenets] = useState([]);
-  const [child_sum_relation, setChild_sum_relation] = useState({});
-
-  useEffect(() => {
-    // console.log(globalTotal);
-    console.log(child_sum_relation, components);
-  });
+  const [child_sum, setChild_sum] = useState([]);
+  const [sum, setSum] = useState(0);
 
   function handleAddElement() {
-    setComponenets([
-      ...components,
-      <Element
-        key={components.length}
-        updateGlobalTotal={totalSum}
-        index={components.length + 1}
-      />,
-    ]);
+    setComponenets([...components, components.length]);
   }
 
   function totalSum(value_from_child, childIndex) {
-    // child_sum_relation[childIndex] = value_from_child;
-    let tempObj = child_sum_relation;
-    console.log(tempObj);
-    tempObj[childIndex] = value_from_child;
-    setChild_sum_relation(tempObj);
+    child_sum[childIndex] = value_from_child;
+    setSum(
+      child_sum.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0)
+    );
   }
   return (
     <>
-      {components}
+      <p>Type</p>
+      <p>Subtype</p>
+      <p>Price</p>
+      <p>Quantity</p>
+      <p>Total</p>
+      {components.map((e, i) => (
+        <Element key={i} updateGlobalTotal={totalSum} index={i} />
+      ))}
+      <br />
       <button onClick={handleAddElement}>Add Element</button>
       <br />
-      Total :
-      {Object.values(child_sum_relation).reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-      }, 0)}
+      Total :{sum}
     </>
   );
 }

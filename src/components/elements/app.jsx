@@ -75,7 +75,7 @@ function App(props) {
             type="number"
             onChange={handleQuantity}
             value={quantity}
-          ></input>
+          ></input>{" "}
           <span>{total}</span>
         </>
       )}
